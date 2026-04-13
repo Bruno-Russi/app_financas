@@ -19,7 +19,10 @@ import {
   LogOut,
   Menu,
   User,
+  Moon,
+  Sun,
 } from "lucide-react";
+import { useTheme } from "@/components/theme-provider";
 import type { User as SupaUser } from "@supabase/supabase-js";
 
 const navItems = [
@@ -34,6 +37,7 @@ export default function DashboardLayout({
 }) {
   const [user, setUser] = useState<SupaUser | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
   const router = useRouter();
   const supabase = createClient();
 
@@ -56,7 +60,7 @@ export default function DashboardLayout({
   return (
     <div className="min-h-screen bg-muted/30">
       {/* Top navbar */}
-      <header className="sticky top-0 z-50 border-b bg-white/95 backdrop-blur-sm">
+      <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur-sm">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">
             {/* Mobile menu */}
@@ -109,6 +113,21 @@ export default function DashboardLayout({
             </nav>
           </div>
 
+          <div className="flex items-center gap-1">
+          {/* Theme toggle */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleTheme}
+            aria-label="Alternar tema"
+          >
+            {theme === "dark" ? (
+              <Sun className="h-5 w-5" />
+            ) : (
+              <Moon className="h-5 w-5" />
+            )}
+          </Button>
+
           {/* User dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger
@@ -126,6 +145,7 @@ export default function DashboardLayout({
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          </div>
         </div>
       </header>
 
