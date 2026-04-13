@@ -2,25 +2,42 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { useTheme } from "@/components/theme-provider";
 import {
   ArrowRight,
   BarChart3,
   Shield,
   Smartphone,
   Wallet,
+  Moon,
+  Sun,
 } from "lucide-react";
 
 export default function LandingPage() {
+  const { theme, toggleTheme } = useTheme();
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Wallet className="h-6 w-6 text-emerald-600" />
             <span className="text-xl font-bold">FinançasPRO</span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleTheme}
+              aria-label="Alternar tema"
+            >
+              {theme === "dark" ? (
+                <Sun className="h-5 w-5" />
+              ) : (
+                <Moon className="h-5 w-5" />
+              )}
+            </Button>
             <Link href="/login">
               <Button variant="ghost">Entrar</Button>
             </Link>
@@ -110,7 +127,7 @@ function FeatureCard({
   description: string;
 }) {
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm border space-y-4">
+    <div className="bg-card rounded-xl p-6 shadow-sm border space-y-4">
       {icon}
       <h3 className="text-xl font-semibold">{title}</h3>
       <p className="text-muted-foreground">{description}</p>
