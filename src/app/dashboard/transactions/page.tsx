@@ -208,7 +208,7 @@ export default function TransactionsPage() {
       </div>
 
       {/* Transactions table */}
-      <div className="border rounded-lg bg-white overflow-x-auto">
+      <div className="border rounded-lg bg-card overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>
@@ -248,7 +248,7 @@ export default function TransactionsPage() {
                       variant={t.type === "receita" ? "default" : "destructive"}
                       className={
                         t.type === "receita"
-                          ? "bg-emerald-100 text-emerald-700 hover:bg-emerald-100"
+                          ? "bg-emerald-100 text-emerald-700 hover:bg-emerald-100 dark:bg-emerald-900/40 dark:text-emerald-400"
                           : ""
                       }
                     >
