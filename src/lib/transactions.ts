@@ -1,7 +1,9 @@
 import { createClient } from "@/lib/supabase/client";
 import type { Transaction, TransactionFormData } from "@/lib/types";
 
-const supabase = createClient();
+function getSupabase() {
+  return createClient();
+}
 
 export async function getTransactions(filters?: {
   month?: number;
@@ -9,7 +11,7 @@ export async function getTransactions(filters?: {
   category?: string;
   search?: string;
 }): Promise<Transaction[]> {
-  let query = supabase
+  let query = getSupabase()
     .from("transactions")
     .select("*")
     .order("date", { ascending: false });
@@ -41,10 +43,10 @@ export async function createTransaction(
 ): Promise<Transaction> {
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+  } = await getSupabase().auth.getUser();
   if (!user) throw new Error("Usuário não autenticado");
 
-  const { data: transaction, error } = await supabase
+  const { data: transaction, error } = await getSupabase()
     .from("transactions")
     .insert({
       ...data,
@@ -61,7 +63,7 @@ export async function updateTransaction(
   id: string,
   data: TransactionFormData
 ): Promise<Transaction> {
-  const { data: transaction, error } = await supabase
+  const { data: transaction, error } = await getSupabase()
     .from("transactions")
     .update(data)
     .eq("id", id)
@@ -73,6 +75,6 @@ export async function updateTransaction(
 }
 
 export async function deleteTransaction(id: string): Promise<void> {
-  const { error } = await supabase.from("transactions").delete().eq("id", id);
+  const { error } = await getSupabase().from("transactions").delete().eq("id", id);
   if (error) throw error;
 }
